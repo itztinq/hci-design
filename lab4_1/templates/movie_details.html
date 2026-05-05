@@ -1,0 +1,80 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Filmoteka - {{ movie.title }}</title>
+    <link rel="stylesheet" href="{% static 'bootstrap.css' %}">
+    <style>
+        body { background-color: #f4f4f4; }
+        .navbar { background-color: #11111a; border-bottom: 3px solid #dc3545; }
+        .navbar-brand { color: white !important; font-weight: bold; letter-spacing: 2px; }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'index' %}">🎬 FILMOTEKA</a>
+            <span class="text-secondary ms-auto" style="font-size: 0.8rem; letter-spacing: 1px;">YOUR PERSONAL FILM ARCHIVE</span>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="mb-4 bg-dark text-white p-4 rounded">
+            <h2 class="fw-bold">{{ movie.title }}</h2>
+            <span class="badge bg-danger rounded-pill">{{ movie.get_genre_display|upper }}</span>
+        </div>
+
+        <div class="row mt-5">
+            <div class="col-md-4">
+                {% if movie.poster %}
+                    <img src="{{ movie.poster.url }}" class="img-fluid rounded shadow" alt="{{ movie.title }}">
+                {% endif %}
+            </div>
+
+            <div class="col-md-8">
+                <div class="card border-0 shadow-sm p-4">
+                    <table class="table table-borderless border-bottom">
+                        <tbody>
+                            <tr class="border-bottom">
+                                <th class="text-secondary" style="width: 30%; font-size: 0.85rem;">PRODUCTION</th>
+                                <td>{{ movie.production.name }}</td>
+                            </tr>
+                            <tr class="border-bottom">
+                                <th class="text-secondary" style="font-size: 0.85rem;">GENRE</th>
+                                <td>{{ movie.get_genre_display }}</td>
+                            </tr>
+                            <tr class="border-bottom">
+                                <th class="text-secondary" style="font-size: 0.85rem;">IMDB CODE</th>
+                                <td>{{ movie.imdb_code }}</td>
+                            </tr>
+                            <tr class="border-bottom">
+                                <th class="text-secondary" style="font-size: 0.85rem;">YEAR</th>
+                                <td>{{ movie.year }}</td>
+                            </tr>
+                            <tr class="border-bottom">
+                                <th class="text-secondary" style="font-size: 0.85rem;">DURATION</th>
+                                <td>{{ movie.duration }} min</td>
+                            </tr>
+                            <tr class="border-bottom">
+                                <th class="text-secondary" style="font-size: 0.85rem;">FORMAT</th>
+                                <td>{{ movie.format }}</td>
+                            </tr>
+                            <tr>
+                                <th class="text-secondary" style="font-size: 0.85rem;">RENTAL PRICE</th>
+                                <td class="text-danger fw-bold fs-5">{{ movie.price }} den.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="mt-4">
+                    <a href="{% url 'index' %}" class="btn btn-outline-dark px-4 py-2">
+                        &larr; Back to all films
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
